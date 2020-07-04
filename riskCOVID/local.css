@@ -19,11 +19,8 @@ body, html {
 
 }
 
-hr{
-    border-color: rgba(255,255,255,0.7);
-}
 
-body{
+.navbar{
     background-color: #193c6d;
     filter: progid: DXImageTransform.Microsoft.gradient(gradientType=1, startColorstr='#003073', endColorstr='#029797');
     background-image: url(//img.alicdn.com/tps/TB1d.u8MXXXXXXuXFXXXXXXXXXX-1900-790.jpg);
@@ -39,7 +36,7 @@ body{
 }
 
 .navbar{
-    padding-bottom: 2px;
+    padding-bottom: 5px;
     padding-left: 2vw;
     padding-right: 2vw;
 }
@@ -100,8 +97,47 @@ body{
 }
 
 #mapid {
-    margin-top: 1%;
-    margin-bottom: 1%;
+    margin-top: 0;
+    padding: 0;
+    margin-bottom: 0;
     height:40vh;
     width:100%;
+}
+.container-fluid{
+    margin: 0;
+    padding:0;
+    width: 100%;
+}
+
+.summaryPane{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #e3e3e3;
+}
+
+.govAdvice{
+
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: black;
+
+}
+
+.flex-fill {
+    flex:1;
+}
+
+.bg-purple {
+    background: rgb(48,0,50);
+}
+.bg-gray {
+    background: rgb(74,74,74);
+}
+.bg-blue {
+    background: rgb(50,101,196);
+}
+.bg-red {
+    background: rgb(196,50,53);
 }

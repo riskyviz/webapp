@@ -2,7 +2,7 @@ var positionInfo = sessionStorage.getItem("location");
 document.getElementById("result").innerHTML = positionInfo;
 
 $( document ).ready(function() {
-    $("#result").fitText(1.5,{minFontSize: '10px', maxFontSize: '200px'});
+    $("#result").fitText(1.3,{minFontSize: '10px', maxFontSize: '200px'});
 });
 
 (function( $ ){
