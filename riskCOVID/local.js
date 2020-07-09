@@ -1,8 +1,10 @@
 var positionInfo = sessionStorage.getItem("location");
 document.getElementById("result").innerHTML = positionInfo;
 
+
+
 $( document ).ready(function() {
-    $("#result").fitText(1.3,{minFontSize: '10px', maxFontSize: '200px'});
+    $("#result").fitText(0.75,{minFontSize: '10px', maxFontSize: '40px'});
 });
 
 (function( $ ){
@@ -37,5 +39,6 @@ $( document ).ready(function() {
     };
 
 })( jQuery );
+
 
 

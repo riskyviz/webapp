@@ -1,6 +1,35 @@
 async function boot() {
-    var geojson = await fetch("826dc85fb600440889480f4d9dbb1a24_2.geojson");
+
+    var geojson = await fetch("new.geojson");
     var geodata = await geojson.json();
+
+
+
+    L.geoJson(geodata, {style: style}).addTo(mymap)
+
+    function style(feature) {
+        return {
+            fillColor: getColor(feature.properties.score),
+            weight: 0.2,
+            opacity: 1,
+            color: 'black',
+            fillOpacity: 0.5
+        };
+    }
+
+
+    lat = sessionStorage.getItem("latitude");
+    lon = sessionStorage.getItem("longitude");
+    locate(lon,lat);
+
+
+
+    function getColor(d) {
+        return d > 30 ? '#ff0034' :
+            d > 1  ? '#FFD300' :
+                d >= 0 ? '#80C904':
+                    'transparent';
+    }
 
     function locate(lon,lat) {
         var point1 = turf.point([lon,lat], { });//x,y
@@ -9,38 +38,363 @@ async function boot() {
         for (var i = 0, len = features.length; i < len; i++) {
             var isInside = turf.inside(point1,features[i]);
             if(isInside) {
-                alert("Found enclosing!:"+JSON.stringify(features[i].properties));
+                var place = features[i].properties.msoa11nm;
+                var score = features[i].properties.score;
+                place = place.replace(/[0-9]/g, '');
+                sessionStorage.setItem("location", place);
+                sessionStorage.setItem("score", score);
+                mymap.flyTo([lat,lon],14);
+                Marker.remove();
+                Marker = L.marker([lat, lon], {icon: logoIcon}).addTo(mymap);
+                document.getElementById("result").textContent = place;
+                document.getElementById("placeName").textContent = place;
+                document.getElementById("riskStripePlace").textContent = place;
+                document.getElementById("indicator").setAttribute("fill", getColor(score));
+
+                if(score > 10){
+                    document.getElementById("riskScale").setAttribute("src", 'img/highRisk.svg');
+                    var riskLevel = document.getElementById("riskLevel");
+                    riskLevel.textContent = "HIGH RISK";
+                    riskLevel.style.color = '#ff0034';
+                }
+                else if(score > 1){
+                    document.getElementById("riskScale").setAttribute("src", 'img/medRisk.svg');
+                    var riskLevel = document.getElementById("riskLevel");
+                    riskLevel.textContent = "MEDIUM RISK";
+                    riskLevel.style.color = '#FFD300';
+                }
+                else if(score >= 0){
+                    document.getElementById("riskScale").setAttribute("src", 'img/lowRisk.svg');
+                    var riskLevel = document.getElementById("riskLevel");
+                    riskLevel.textContent = "LOW RISK";
+                    riskLevel.style.color = '#80C904';
+                }
+                else{
+                    document.getElementById("riskScale").setAttribute("src", '');
+                }
+                var cb = createColourBar(features[i].properties,1,30, 250, 250);
+                document.getElementById("colorBar").innerHTML="";
+                document.getElementById("colorBar").appendChild(cb);
+                $('#myChart').remove();
+                $('#chartFather').append('<canvas id="myChart"></canvas>');
+                createChart(features[i].properties);
+
+
             }
         }
     }
 
     async function location_by_postcode(postcode) {
         var pg = postcode.slice(0,2);
-        var r = await fetch("postcode_lookup/"+pg+".json");
+        var r = await fetch("../geolocation_test/postcode_lookup/"+pg+".json");
         var postcodes = await r.json();
         if (postcode in postcodes) {
             var lon = postcodes[postcode].lon;
+            sessionStorage.setItem("longitude", lon);
             var lat = postcodes[postcode].lat;
+            sessionStorage.setItem("latitude", lat);
             locate(lon, lat);
+        }
+        else{
+            alert("Invalid Postcode")
         }
     }
 
-    var location_input = document.getElementById("location_input");
-    var location_go = document.getElementById("location_go");
+    var location_input = document.getElementById("selector");
+    var location_form = document.getElementById("searchForm");
 
-    location_go.onclick = function() {
+    location_form.onsubmit = function(e) {
+        e.preventDefault();
         var postcode = location_input.value;
         location_by_postcode(postcode);
+        location_form.reset();
+
     }
 
-    if ("geolocation" in navigator) {
-            var that =this;
-            this.watchID = navigator.geolocation.watchPosition(function(position) {
-                var lon = position.coords.longitude;
-                var lat = position.coords.latitude;
-                alert(locate(lon,lat));
-            },function(err) { alert(err); });
-    } else {
-        alert("no geolocation");
+    function parseDate(s) {
+        // parse date of the form YYYY-MM-DD
+        var year = parseInt(s.slice(0,4));
+        var month = parseInt(s.slice(5,7));
+        var day = parseInt(s.slice(8,10));
+        return new Date(year,month-1,day,0,0,0,0);
     }
+
+    /**
+     * Format a javascript Date and return a short string eg "Mon 31 Jul"
+     * @param dt
+     * @returns {string}
+     */
+    function formatDate(dt) {
+        return dt.toString().slice(0,10)
+    }
+
+    /**
+     * Create a colour bar for the score history and return its HTML element,
+     * ready to be added to the document
+     *
+     * @param score_obj the details of a score
+     * @param threshold1 threshold between low and medium scores
+     * @param threshold2 threshold between medium and high scores
+     * @param height height of the bar (suggest 40 or 50) in pixels
+     * @param width width of the bar, suggest at least 300
+     * @returns {HTMLCanvasElement}
+     */
+    function createColourBar(score_obj,threshold1,threshold2,height,width) {
+        var scores = [score_obj["score"]].concat(score_obj["history_date_desc"]);
+
+        // work out the end date (with the latest score) ...
+        var endDate = parseDate(score_obj["LatestDate"]);
+
+        // and the start date in the history
+        var startDate = new Date();
+
+        startDate.setDate(endDate.getDate()-(scores.length-1));
+        document.getElementById("endDate").textContent = formatDate(endDate);
+        document.getElementById("startDate").textContent = formatDate(startDate);
+
+        // create a canvas object for drawing the bar
+        var cnv = document.createElement("canvas");
+
+        cnv.setAttribute("width",width);
+        cnv.setAttribute("height", height);
+        var ctx = cnv.getContext('2d');
+
+        // create a margin at the left and the right
+        var marginx = 25;  // use 25 pixels
+
+        // work out the height and width of the colourbar itself
+        var barwidth = width - (2*marginx);
+        var barheight = height-25;
+
+        // draw the coloured rectangles
+        var count = scores.length;
+        var step = barwidth / count;
+        for(var idx=0; idx < count; idx+=1) {
+            var score = scores[idx];
+            var colour = null;
+            if (score >= 0 && score <= threshold1) {
+                if(score <= (2*threshold1)/10){
+                    colour = `rgb(128,201,4)`;
+                }
+                else if(score <= (4*threshold1)/10){
+                    colour = `rgb(149,203,3)`;
+                }
+                else if(score <= (6*threshold1)/10){
+                    colour = `rgb(170,204,3)`;
+                }
+                else if(score <= (8*threshold1)/10){
+                    colour = `rgb(192,206,2)`;
+                }
+                else if(score <= (10*threshold1)/10){
+                    colour = `rgb(213,208,1)`;
+                }
+            } else if (score > threshold1 && score <= threshold2) {
+                if(score <= (threshold2)/10){
+                    colour = `rgb(244,210,0)`;
+                }
+                else if(score <= (2*threshold2)/10){
+                    colour = `rgb(255,211,0)`;
+                }
+                else if(score <= (3*threshold2)/10){
+                    colour = `rgb(255,193,4)`;
+                }
+                else if(score <= (4*threshold2)/10){
+                    colour = `rgb(255,176,9)`;
+                }
+                else if(score <= (5*threshold2)/10){
+                    colour = `rgb(255,158,13)`;
+                }
+                else if(score <= (6*threshold2)/10){
+                    colour = `rgb(255,141,17)`;
+                }
+                else if(score <= (7*threshold2)/10){
+                    colour = `rgb(255,123,22)`;
+                }
+                else if(score <= (8*threshold2)/10){
+                    colour = `rgb(255,106,26)`;
+                }
+                else if(score <= (9*threshold2)/10){
+                    colour = `rgb(255,88,30)`;
+                }
+                else if(score <= (10*threshold2)/10){
+                    colour = `rgb(255,53,39)`;
+                }
+            } else if (score > threshold2) {
+                colour = `rgb(255,0,52)`;
+            }
+            if (colour != null) {
+                ctx.fillStyle = colour;
+                ctx.globalCompositeOperation = "lighter"
+                ctx.fillRect(marginx + barwidth - (step*(1+idx)), 0, step, barheight);
+
+            }
+        }
+
+
+
+        // label the start and end dates
+        var x0 = marginx + step/2;
+        var x1 = width - marginx - step/2;
+        var y = barheight+15;
+
+        ctx.textAlign = "center";
+        ctx.fillStyle = "black";
+        ctx.font = "bold 12px 'Source Code Pro'";
+
+        // draw some lines dividing each day
+        ctx.strokeStyle = "grey";
+        ctx.lineWidth = 0.1;
+        var x = marginx;
+        for(var idx=0; idx < count-1; idx+=1) {
+            ctx.beginPath();
+            x += step;
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, barheight);
+            ctx.stroke();
+        }
+
+
+        // add start "tick"
+        ctx.moveTo(x0,barheight);
+        ctx.lineTo(x0,barheight+5);
+        ctx.stroke();
+
+        // add end "tick"
+        ctx.moveTo(x1,barheight);
+        ctx.lineTo(x1,barheight+5);
+        ctx.stroke();
+
+        // add start and end labels
+        ctx.fillText(formatDate(startDate),x0,y,2*marginx);
+        ctx.fillText(formatDate(endDate),x1,y,2*marginx);
+
+        // add an enclosing rectangle around the colour bar to make it look
+        // a bit nicer
+        ctx.strokeStyle = "grey";
+        ctx.strokeRect(marginx,0,barwidth,barheight);
+
+        return cnv;
+    }
+
+    function getDates(startDate, endDate) {
+        var dates = [],
+            currentDate = startDate,
+            addDays = function(days) {
+                var date = new Date(this.valueOf());
+                date.setDate(date.getDate() + days);
+                return date;
+            };
+        while (currentDate <= endDate) {
+            dates.push(formatDate(currentDate));
+            currentDate = addDays.call(currentDate, 1);
+        }
+        return dates;
+    };
+
+    function createChart(data){
+        var cht = document.getElementById('myChart').getContext('2d');
+        cht.height = 500;
+        var scores = [data["score"]].concat(data["history_date_desc"]);
+        // work out the end date (with the latest score) ...
+        var endDate = parseDate(data["LatestDate"]);
+        // and the start date in the history
+        var startDate = new Date();
+        startDate.setDate(endDate.getDate()-(scores.length-1));
+        var dateArray = []
+        dateArray = getDates(startDate,endDate);
+
+        var chart = new Chart(cht, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: dateArray,
+                datasets: [{
+                    label: "My First dataset",
+                    borderColor: 'rgb(0,48,115)',
+                    borderWidth: 3.5,
+                    backgroundColor: 'rgba(255,255,255,0)',
+                    data: scores.reverse(),
+                    fill: false,
+                    pointRadius: 1.5,
+                    pointHoverRadius: 3.5,
+                    pointBackgroundColor: 'rgb(0,48,115)'
+                }]
+            },
+
+            // Configuration options go here
+            options: {
+                maintainAspectRatio:true,
+                aspectRatio: 1.8,
+                scales:{
+                    xAxes:[{
+                        display: true,
+                        gridLines: {
+                            display: false
+                        },
+
+                        ticks:{
+                            display: true,
+                            autoSkip: true,
+                            maxTicksLimit: 2,
+                            maxRotation: 0,
+                            minRotation: 0,
+                            fontFamily: 'Source Code Pro'
+                        }
+                    },{
+                        position: 'top',
+                        ticks: {
+                            display: false
+                        },
+                        gridLines: {
+                            display: false,
+                            drawTicks: false
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: false,
+                            labelString: 'Case Rate'
+                        },
+                        display: true,
+                        ticks:{
+                            fontFamily: 'Source Code Pro'
+                        }
+
+
+                    }, {
+                        position: 'right',
+                        ticks: {
+                            display: false
+                        },
+                        gridLines: {
+                            display: false,
+                            drawTicks: false
+                        }
+                    }],
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return "Case Rate " + tooltipItem.yLabel.toFixed(2);
+                        }
+                    },
+                    bodyFontSize: 16,
+                    titleFontSize: 10,
+                    titleFontStyle: 'normal',
+                    bodyFontFamily: "Source Code Pro",
+                    bodyFontStyle: "bold",
+                    bodyAlign: 'center',
+                    displayColors: false
+                }
+            }
+        });
+    }
+
+
 }
+

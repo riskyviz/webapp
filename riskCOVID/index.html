@@ -14,14 +14,30 @@
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <title>RiskyViz</title>
+    <title>COVID Risk Finder</title>
+    <link rel = "icon" href =
+            "img/marker.svg"
+          type = "image/x-icon">
   </head>
   <body>
+    <nav class="navbar navbar-expand-md justify-content-between">
+      <a class="navbar-brand"><img src="img/navbrand.svg" alt=""></a>
+      <form class="mx-2 my-auto d-inline w-100">
+        <div class="input-group">
+          <input type="text" id="selector" class="form-control" placeholder="Search for your town or postcode...">
+          <span class="input-group-append">
+              <button class="btn btn-outline-secondary border border-warning" type="button" id="search" onclick="">
+                  <i class="fa fa-search"></i>
+              </button>
+          </span>
+        </div>
+      </form>
+    </nav>
 
     <div class="hero-image">
       <div class="hero-text">
         <h1>Find out the coronavirus risk in your area...</h1>
-        <button type="button" class="btn btn-warning btn-sm" onclick="boot()">Set Location</button>
+        <button type="button" id="setLocation" class="btn btn-warning btn-sm" onclick="boot()">Set Location</button>
       </div>
     </div>
 

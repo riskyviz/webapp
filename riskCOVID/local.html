@@ -15,18 +15,25 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
           integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
           crossorigin=""/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Code+Pro">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto">
 
-
-    <title>RiskyViz Local</title>
+    <title>COVID Risk Finder</title>
+    <link rel = "icon" href =
+            "img/marker.svg"
+          type = "image/x-icon">
 </head>
-<body>
+<body onload="boot()">
     <nav class="navbar navbar-expand-md justify-content-between">
-        <a class="navbar-brand" id="result"><h1></h1></a>
-        <form class="mx-2 my-auto d-inline w-100">
+        <div class="navbar-brand" ><a href="index.html"><img src="img/navbrand.svg" alt=""></a></div>
+        <form class="mx-2 my-auto d-inline w-100" id="searchForm">
             <div class="input-group">
                 <input type="text" id="selector" class="form-control" placeholder="Search for another area...">
                 <span class="input-group-append">
-                    <button class="btn btn-outline-secondary border border-warning" type="button">
+                    <button class="btn btn-outline-secondary border border-warning" type="submit">
                         <i class="fa fa-search"></i>
                     </button>
                 </span>
@@ -36,16 +43,62 @@
     <div id="mapid"></div>
     <div class="container-fluid h-100">
         <div class="row justify-content-center h-100">
-            <div class="col-lg-6">
-                <div class="h-100 d-flex flex-column">
-                    <div class="row justify-content-center bg-purple">
-                        <div class="text-white">
-                            <div style="height:100px">Risk Icons</div>
+            <div class="col-lg-6 bg-gray">
+                <div class="card" style="width: 96%;">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="20" xmlns="http://www.w3.org/2000/svg" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" role="img"><rect width="100%" height="100%" fill="transparent" id="indicator"/></svg>
+
+                    <div class="card-body" id="summary">
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h5 class="card-title" id="result"></h5>
+                            </div>
+                            <div class="col-sm-6" id="scaleBox">
+                                <img src="img/medRisk.svg" alt="" id="riskScale">
+                            </div>
+                        </div>
+                        <div class="row" id="summary-text">
+                            <p class="card-text">This area of <span id="placeName"></span> is currently <em id="riskLevel"></em>. The rate of COVID cases in this area is not too large and everyday activities can begin to resume.</p>
+                            <p>The risk levels are estimated using nationwide case rate data, and the distribution of COVID related deaths.
+                                <a href="#"> Learn more.</a></p>
                         </div>
                     </div>
-                    <div class="row justify-content-center bg-blue flex-grow-1">
-                        <div class="text-white">Advice Summary</div>
+                    <div class="card-header">
+                        <ul class="nav nav-pills nav-fill">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="advice-tab" data-toggle="tab" href="#advice" role="tab" aria-controls="Advice" aria-selected="true">Advice</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="stripes-tab" data-toggle="tab" href="#stripes" role="tab" aria-controls="stripes" aria-selected="false">Risk Stripes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="chart-tab" data-toggle="tab" href="#chart" role="tab" aria-controls="chart" aria-selected="false">Case Rate</a>
+                            </li>
+                        </ul>
                     </div>
+
+                    <div class="card-body">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="advice" role="tabpanel" aria-labelledby="advice-tab"></div>
+                            <div class="tab-pane fade" id="stripes" role="tabpanel" aria-labelledby="stripes-tab">
+                                <div class="row">
+                                    <div class="col-sm-6" id="riskStripesDesc">
+                                        <h3>Risk Stripes</h3>
+                                        <p>This graphic is simple a visual representation of the changing risk level in <span id="riskStripePlace"></span> over the last 30 days (between <span id="startDate"></span> and <span id="endDate"></span>). The risk level for each day in this period is represented by a stripe; the colour of each stripe representing the severity of the risk</p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div id="colorBar"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="tab-pane fade" id="chart" role="tabpanel" aria-labelledby="chart-tab"><div id="chartFather" style="width: 100%;"><canvas id="myChart"></canvas></div></div>
+
+                        </div>
+                    </div>
+
+
+
                 </div>
             </div>
             <div class="col-lg-6 bg-gray text-white">
@@ -64,21 +117,26 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-4-autocomplete/dist/bootstrap-4-autocomplete.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-4-autocomplete/dist/bootstrap-4-autocomplete.min.js" crossorigin="anonymous"></script>
+<script src='https://unpkg.com/@turf/turf/turf.min.js'></script>
 <script type="text/javascript" src="local.js"></script>
+<script type="text/javascript" src="../geolocation_test/geolocation.js"></script>
+
     <!-- Make sure you put this AFTER Leaflet's CSS -->
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
         integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
         crossorigin=""></script>
-<script type="text/javascript" src="../dist/leaflet.ajax.js"></script>
+
 <script>
     //
+
     var lon = sessionStorage.getItem("longitude");
     var lat = sessionStorage.getItem("latitude");
     var mymap = L.map('mapid').setView([lat, lon], 12);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
         maxZoom: 18,
+        minZoom: 10,
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
             '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
             'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -87,35 +145,36 @@
         zoomOffset:-1,
     }).addTo(mymap);
 
-
-
-
-
-    function style(feature) {
-        return {
-            fillColor: getColor(feature.properties.score),
-            weight: 0.25,
-            opacity: 1,
-            color: 'black',
-            fillOpacity: 0.3
-        };
-    }
-
-    fetch("new.geojson").then(
-        fetched => fetched.json()
-    ).then(
-        boundaries => L.geoJson(boundaries, {style: style}).addTo(mymap)
-    );
+    var logoIcon = L.icon({
+        iconUrl: 'img/marker.svg',
+        iconSize:     [40, 50], // size of the icon
+        iconAnchor:   [20, 49], // point of the icon which will correspond to marker's location
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
 
     mymap.flyTo([lat,lon],14);
-    L.marker([lat, lon]).addTo(mymap);
-
-    function getColor(d) {
-        return d > 10 ? '#800026' :
-            d > 1  ? '#FFD300' :
-            d >= 0 ? '#80C904':
-                        'transparent';
+    var Marker = L.marker([lat, lon], {icon: logoIcon}).addTo(mymap);
+    var score = sessionStorage.getItem("score");
+    document.getElementById("indicator").setAttribute("fill", getColor(score));
+    if(score > 10){
+        document.getElementById("riskScale").setAttribute("src", 'img/highRisk.svg');
     }
+    else if(score > 1){
+        document.getElementById("riskScale").setAttribute("src", 'img/medRisk.svg');
+    }
+    else if(score >= 0){
+        document.getElementById("riskScale").setAttribute("src", 'img/lowRisk.svg');
+    }
+    else{
+        document.getElementById("riskScale").setAttribute("src", '');
+    }
+    function getColor(d) {
+        return d > 30 ? '#ff0034' :
+            d > 1  ? '#FFD300' :
+                d >= 0 ? '#80C904':
+                    'transparent';
+    }
+
 
 
 </script>

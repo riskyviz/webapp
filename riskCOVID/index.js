@@ -1,5 +1,4 @@
-$('.btn').on('click', function() {
-    var x = document.getElementById("demo");
+$('#setLocation').on('click', function() {
     var $this = $(this);
     var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> Loading...';
     if ($(this).html() !== loadingText) {
@@ -10,7 +9,7 @@ $('.btn').on('click', function() {
 });
 
 async function boot() {
-    var geojson = await fetch("Middle_Layer_Super_Output_Areas__December_2011__Boundaries.geojson");
+    var geojson = await fetch("new.geojson");
     var geodata = await geojson.json();
 
     if ("geolocation" in navigator) {
@@ -29,10 +28,15 @@ async function boot() {
 
             for (var i = 0, len = features.length; i < len; i++) {
                 var isInside = turf.inside(point1,features[i]);
+
                 if(isInside) {
                     var place = features[i].properties.msoa11nm;
+                    var score = features[i].properties.score;
+
                     place = place.replace(/[0-9]/g, '');
                     sessionStorage.setItem("location", place);
+                    sessionStorage.setItem("score", score);
+
                     window.location.assign("local.html");
                 }
             }
