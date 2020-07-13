@@ -22,7 +22,7 @@
   <body>
     <nav class="navbar navbar-expand-md justify-content-between">
       <a class="navbar-brand"><img src="img/navbrand.svg" alt=""></a>
-      <form class="mx-2 my-auto d-inline w-100">
+      <form class="mx-2 my-auto d-inline w-100" id="searchForm">
         <div class="input-group">
           <input type="text" id="selector" class="form-control" placeholder="Search for your town or postcode...">
           <span class="input-group-append">
@@ -49,5 +49,40 @@
 
     <script type="text/javascript" src="index.js"></script>
     <script type="text/javascript" src="background.js"></script>
+    <script>
+    async function location_search(location_string) {
+
+      var params = new URLSearchParams({
+        "q":location_string,
+        "countrycodes":"gb",
+        "format":"json"
+      });
+      fetch("https:nominatim.openstreetmap.org/search?"+params.toString()).then(
+              response => response.json()
+      ).then(
+              results => {
+                if (results.length) {
+                  var lat = Number.parseFloat(results[0]["lat"]);
+                  var lon = Number.parseFloat(results[0]["lon"]);
+                  sessionStorage.setItem("latitude", lat);
+                  sessionStorage.setItem("longitude", lon);
+                  window.location.assign("local.html");
+                }
+              }
+      )
+    }
+
+
+      var location_input = document.getElementById("selector");
+      var location_form = document.getElementById("searchForm");
+
+      location_form.onsubmit = function(e) {
+        e.preventDefault();
+        var postcode = location_input.value;
+        location_search(postcode);
+        location_form.reset();
+
+      }
+    </script>
   </body>
 </html>

@@ -4,8 +4,12 @@ async function boot() {
     var geodata = await geojson.json();
 
 
-
-    L.geoJson(geodata, {style: style}).addTo(mymap)
+    function getColor(d) {
+        return d > 30 ? '#ff0034' :
+            d > 1  ? '#FFD300' :
+                d >= 0 ? '#80C904':
+                    'transparent';
+    }
 
     function style(feature) {
         return {
@@ -13,9 +17,15 @@ async function boot() {
             weight: 0.2,
             opacity: 1,
             color: 'black',
-            fillOpacity: 0.5
+            fillOpacity: 0.6
         };
     }
+
+
+
+    L.geoJson(geodata, {style: style}).addTo(mymap);
+
+
 
 
     lat = sessionStorage.getItem("latitude");
@@ -24,12 +34,7 @@ async function boot() {
 
 
 
-    function getColor(d) {
-        return d > 30 ? '#ff0034' :
-            d > 1  ? '#FFD300' :
-                d >= 0 ? '#80C904':
-                    'transparent';
-    }
+
 
     function locate(lon,lat) {
         var point1 = turf.point([lon,lat], { });//x,y
@@ -54,18 +59,30 @@ async function boot() {
                 if(score > 10){
                     document.getElementById("riskScale").setAttribute("src", 'img/highRisk.svg');
                     var riskLevel = document.getElementById("riskLevel");
+                    document.getElementById("adviceSummary").textContent = "The COVID rate is higher and you are advised to stay at home as much as you can";
+                    document.getElementById("advice3").textContent = "Avoid busy areas where social distancing cannot be easily maintained";
+                    document.getElementById("advice2").textContent = "Avoid using public transport";
+                    document.getElementById("advice1").textContent = "Wear a face covering, especially in enclosed spaces";
                     riskLevel.textContent = "HIGH RISK";
                     riskLevel.style.color = '#ff0034';
                 }
                 else if(score > 1){
                     document.getElementById("riskScale").setAttribute("src", 'img/medRisk.svg');
                     var riskLevel = document.getElementById("riskLevel");
+                    document.getElementById("adviceSummary").textContent = "The COVID rate is moderate and you are advised to stay alert, paying particular attention to maintaining social distancing";
+                    document.getElementById("advice3").textContent = "Limit visits to busy areas where social distancing cannot be easily maintained";
+                    document.getElementById("advice2").textContent = "Limit use of public transport";
+                    document.getElementById("advice1").textContent = "Wear a face covering, especially in enclosed spaces";
                     riskLevel.textContent = "MEDIUM RISK";
                     riskLevel.style.color = '#FFD300';
                 }
                 else if(score >= 0){
                     document.getElementById("riskScale").setAttribute("src", 'img/lowRisk.svg');
                     var riskLevel = document.getElementById("riskLevel");
+                    document.getElementById("adviceSummary").textContent = "The COVID rate is lower but you should still follow government issued precautions";
+                    document.getElementById("advice1").textContent = "You may wish to consider wearing a face covering, especially in enclosed spaces";
+                    document.getElementById("advice2").textContent = "Use of public transport does not pose a great risk";
+                    document.getElementById("advice3").textContent = "Busy areas are lower risk, but continue to maintain social distance";
                     riskLevel.textContent = "LOW RISK";
                     riskLevel.style.color = '#80C904';
                 }
@@ -84,21 +101,26 @@ async function boot() {
         }
     }
 
-    async function location_by_postcode(postcode) {
-        var pg = postcode.slice(0,2);
-        var r = await fetch("../geolocation_test/postcode_lookup/"+pg+".json");
-        var postcodes = await r.json();
-        if (postcode in postcodes) {
-            var lon = postcodes[postcode].lon;
-            sessionStorage.setItem("longitude", lon);
-            var lat = postcodes[postcode].lat;
-            sessionStorage.setItem("latitude", lat);
-            locate(lon, lat);
-        }
-        else{
-            alert("Invalid Postcode")
-        }
+    async function location_search(location_string) {
+
+        var params = new URLSearchParams({
+            "q":location_string,
+            "countrycodes":"gb",
+            "format":"json"
+        });
+        fetch("https:nominatim.openstreetmap.org/search?"+params.toString()).then(
+            response => response.json()
+        ).then(
+            results => {
+                if (results.length) {
+                    var lat = Number.parseFloat(results[0]["lat"]);
+                    var lon = Number.parseFloat(results[0]["lon"]);
+                    locate(lon,lat);
+                }
+            }
+        )
     }
+
 
     var location_input = document.getElementById("selector");
     var location_form = document.getElementById("searchForm");
@@ -106,7 +128,7 @@ async function boot() {
     location_form.onsubmit = function(e) {
         e.preventDefault();
         var postcode = location_input.value;
-        location_by_postcode(postcode);
+        location_search(postcode);
         location_form.reset();
 
     }
@@ -151,7 +173,7 @@ async function boot() {
         startDate.setDate(endDate.getDate()-(scores.length-1));
         document.getElementById("endDate").textContent = formatDate(endDate);
         document.getElementById("startDate").textContent = formatDate(startDate);
-
+        document.getElementById("date").textContent = formatDate(endDate);
         // create a canvas object for drawing the bar
         var cnv = document.createElement("canvas");
 
@@ -312,14 +334,14 @@ async function boot() {
                 labels: dateArray,
                 datasets: [{
                     label: "My First dataset",
-                    borderColor: 'rgb(0,48,115)',
+                    borderColor: 'rgb(87,164,255)',
                     borderWidth: 3.5,
                     backgroundColor: 'rgba(255,255,255,0)',
                     data: scores.reverse(),
                     fill: false,
                     pointRadius: 1.5,
                     pointHoverRadius: 3.5,
-                    pointBackgroundColor: 'rgb(0,48,115)'
+                    pointBackgroundColor: 'rgb(87,164,255)'
                 }]
             },
 

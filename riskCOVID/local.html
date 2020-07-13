@@ -41,9 +41,9 @@
         </form>
     </nav>
     <div id="mapid"></div>
-    <div class="container-fluid h-100">
-        <div class="row justify-content-center h-100">
-            <div class="col-lg-6 bg-gray">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-6 bg-gray" style="margin-bottom: 0">
                 <div class="card" style="width: 96%;">
                     <svg class="bd-placeholder-img card-img-top" width="100%" height="20" xmlns="http://www.w3.org/2000/svg" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" role="img"><rect width="100%" height="100%" fill="transparent" id="indicator"/></svg>
 
@@ -52,13 +52,14 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <h5 class="card-title" id="result"></h5>
+                                <p id="date"></p>
                             </div>
                             <div class="col-sm-6" id="scaleBox">
                                 <img src="img/medRisk.svg" alt="" id="riskScale">
                             </div>
                         </div>
                         <div class="row" id="summary-text">
-                            <p class="card-text">This area of <span id="placeName"></span> is currently <em id="riskLevel"></em>. The rate of COVID cases in this area is not too large and everyday activities can begin to resume.</p>
+                            <p class="card-text">This area of <span id="placeName"></span> is currently <em id="riskLevel"></em>. <span id="adviceSummary"></span>.</p>
                             <p>The risk levels are estimated using nationwide case rate data, and the distribution of COVID related deaths.
                                 <a href="#"> Learn more.</a></p>
                         </div>
@@ -79,20 +80,39 @@
 
                     <div class="card-body">
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="advice" role="tabpanel" aria-labelledby="advice-tab"></div>
+                            <div class="tab-pane fade show active" id="advice" role="tabpanel" aria-labelledby="advice-tab">
+                                <ul class="list-group list-group-flush" id="mainAdvice">
+                                    <li class="list-group-item" id="gov">Specific Government advice for England and Wales should <strong>always</strong> be followed</li>
+                                    <li class="list-group-item" id="advice1"></li>
+                                    <li class="list-group-item" id="advice2"></li>
+                                    <li class="list-group-item" id="advice3"></li>
+                                </ul>
+                            </div>
                             <div class="tab-pane fade" id="stripes" role="tabpanel" aria-labelledby="stripes-tab">
                                 <div class="row">
-                                    <div class="col-sm-6" id="riskStripesDesc">
+                                    <div class="col-md-6" id="riskStripesDesc">
                                         <h3>Risk Stripes</h3>
                                         <p>This graphic is simple a visual representation of the changing risk level in <span id="riskStripePlace"></span> over the last 30 days (between <span id="startDate"></span> and <span id="endDate"></span>). The risk level for each day in this period is represented by a stripe; the colour of each stripe representing the severity of the risk</p>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-md-6">
                                         <div id="colorBar"></div>
                                     </div>
                                 </div>
 
                             </div>
-                            <div class="tab-pane fade" id="chart" role="tabpanel" aria-labelledby="chart-tab"><div id="chartFather" style="width: 100%;"><canvas id="myChart"></canvas></div></div>
+                            <div class="tab-pane fade" id="chart" role="tabpanel" aria-labelledby="chart-tab">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <div id="chartFather" style="width: 100%;"><canvas id="myChart"></canvas></div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <h3>Case Rate</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem cum cumque ducimus enim ex itaque labore laudantium libero minima, modi natus officia reiciendis rem sit soluta tempora totam unde. Dolorem!</p>
+                                    </div>
+                                </div>
+
+
+                            </div>
 
                         </div>
                     </div>
@@ -101,8 +121,37 @@
 
                 </div>
             </div>
-            <div class="col-lg-6 bg-gray text-white">
-                <p>Government Advice, national graph, statistics etc.</p>
+            <div class="col-xl-6 bg-gray">
+                <div class="card" style="width: 96%;">
+                    <div class="card-header">
+                        <h1>Government Information & Advice</h1>
+                        <ul id="govAdvice">
+                            <li><a href="https://www.gov.uk/coronavirus" target="_blank">UK coronavirus guidance and support</a></li>
+                            <li><a href="https://111.wales.nhs.uk/coronavirus(2019ncov)" target="_blank">Coronavirus advice for Wales</a></li>
+                            <li><a href="https://www.gov.uk/coronavirus-employee-risk-assessment" target="_blank">Check if you should go back to work</a></li>
+                            <li><a href="https://www.gov.uk/government/news/leicestershire-coronavirus-lockdown-areas-and-changes" target="_blank">Leicestershire coronavirus lockdown</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body">
+                        <h3>Main Symptoms of Coronavirus:</h3>
+                        <ul id="symptoms">
+                            <li><strong>High temperature</strong> - hot to touch on chest or back</li>
+                            <li><strong>New, continuous cough</strong> - coughing a lot for more than an hour, or 3 or more coughing episodes in 24 hours</li>
+                            <li><strong>Loss or change to your sense of smell or taste</strong></li>
+                        </ul>
+                        <h3>If you have any of the symptoms:</h3>
+                        <ol id="action">
+                            <li><strong>Stay at home (self-isolate)</strong> - do not leave your home or have visitors. Anyone you live with, and anyone in your support bubble, must also self-isolate.</li>
+                            <li><strong>Get a test</strong> - get a test to check if you have coronavirus as soon as possible. Anyone you live with, and anyone in your support bubble, should also get a test if they have symptoms.</li>
+                        </ol>
+                        <h4 id="test"><a href="https://www.nhs.uk/conditions/coronavirus-covid-19/testing-and-tracing/get-an-antigen-test-to-check-if-you-have-coronavirus/" target="_blank">Get a test</a></h4>
+                    </div>
+                    </div>
+
+
+
+                </div>
             </div>
         </div>
     </div>
