@@ -22,18 +22,15 @@ async function boot() {
             sessionStorage.setItem("latitude", lat);
             var point1 = turf.point([lon,lat], { });//x,y
 
-
-
             var features = geodata.features;
 
             for (var i = 0, len = features.length; i < len; i++) {
                 var isInside = turf.inside(point1,features[i]);
 
                 if(isInside) {
-                    var place = features[i].properties.msoa11nm;
+                    var place = features[i].properties.long_name;
                     var score = features[i].properties.score;
 
-                    place = place.replace(/[0-9]/g, '');
                     sessionStorage.setItem("location", place);
                     sessionStorage.setItem("score", score);
 
@@ -42,7 +39,7 @@ async function boot() {
             }
         },function(err) { alert(err); });
     } else {
-        alert("no geolocation");
+        // alert("no geolocation");
     }
 }
 
