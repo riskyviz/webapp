@@ -57,7 +57,7 @@
         "countrycodes":"gb",
         "format":"json"
       });
-      fetch("https:nominatim.openstreetmap.org/search?"+params.toString()).then(
+      fetch("https://nominatim.openstreetmap.org/search?"+params.toString()).then(
               response => response.json()
       ).then(
               results => {
