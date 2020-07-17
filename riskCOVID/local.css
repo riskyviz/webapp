@@ -76,7 +76,6 @@ body{
 }
 .navbar-brand{
     display: inline-block;
-    width: 100%;
 }
 
 .navbar-brand>a>img{
