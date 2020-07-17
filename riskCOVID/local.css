@@ -81,6 +81,7 @@ body{
 
 .navbar-brand>a>img{
     height: 60px;
+    overflow: visible;
 }
 
 .form-control{
