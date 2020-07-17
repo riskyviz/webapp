@@ -56,7 +56,7 @@ async function boot() {
                 document.getElementById("riskStripePlace").textContent = place;
                 document.getElementById("indicator").setAttribute("fill", getColor(score));
 
-                if(score > 10){
+                if(score > 30){
                     document.getElementById("riskScale").setAttribute("src", 'img/highRisk.svg');
                     var riskLevel = document.getElementById("riskLevel");
                     document.getElementById("adviceSummary").textContent = "The COVID rate is higher and you are advised to stay at home as much as you can";
