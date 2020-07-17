@@ -52,6 +52,7 @@ async function boot() {
                 Marker.remove();
                 Marker = L.marker([lat, lon], {icon: logoIcon}).addTo(mymap);
                 document.getElementById("result").textContent = place;
+                document.getElementById("currentRate").textContent = score.toFixed(2);
                 document.getElementById("placeName").textContent = place;
                 document.getElementById("riskStripePlace").textContent = place;
                 document.getElementById("indicator").setAttribute("fill", getColor(score));
