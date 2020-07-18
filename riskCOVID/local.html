@@ -205,10 +205,10 @@
     var Marker = L.marker([lat, lon], {icon: logoIcon}).addTo(mymap);
     var score = sessionStorage.getItem("score");
     document.getElementById("indicator").setAttribute("fill", getColor(score));
-    if(score > 10){
+    if(score >= 3.52){
         document.getElementById("riskScale").setAttribute("src", 'img/highRisk.svg');
     }
-    else if(score > 1){
+    else if(score >= 0.71){
         document.getElementById("riskScale").setAttribute("src", 'img/medRisk.svg');
     }
     else if(score >= 0){

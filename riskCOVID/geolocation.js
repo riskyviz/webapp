@@ -5,8 +5,8 @@ async function boot() {
 
 
     function getColor(d) {
-        return d > 3.51 ? '#ff0034' :
-            d > 0.71  ? '#FFD300' :
+        return d >= 3.51 ? '#ff0034' :
+            d >= 0.71  ? '#FFD300' :
                 d >= 0 ? '#80C904':
                     'transparent';
     }
