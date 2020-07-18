@@ -21,9 +21,46 @@ async function boot() {
         };
     }
 
+    function onEachFeature(feature, layer) {
+        layer.on({
+            mouseover: highlightFeature,
+            mouseout: resetHighlight,
+            click: onClick
+        });
+    }
 
+    function resetHighlight(e) {
+        var layer = e.target;
+        layer.setStyle({
+            weight: 0.2,
+            opacity: 1,
+            color: 'black',
+            fillOpacity: 0.6
+        });
+    }
 
-    L.geoJson(geodata, {style: style}).addTo(mymap);
+    function highlightFeature(e) {
+        var layer = e.target;
+
+        layer.setStyle({
+            weight: 5,
+            color: '#666',
+            dashArray: '',
+            fillOpacity: 0.7
+        });
+
+        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+            layer.bringToFront();
+        }
+    }
+
+    function onClick(e){
+        var lat = e.latlng.lat;
+        var lon = e.latlng.lng;
+        locate(lon,lat);
+    }
+
+    L.geoJson(geodata, {style: style, onEachFeature: onEachFeature}).addTo(mymap);
 
 
 
