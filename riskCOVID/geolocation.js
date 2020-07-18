@@ -5,8 +5,8 @@ async function boot() {
 
 
     function getColor(d) {
-        return d > 30 ? '#ff0034' :
-            d > 1  ? '#FFD300' :
+        return d > 3.51 ? '#ff0034' :
+            d > 0.71  ? '#FFD300' :
                 d >= 0 ? '#80C904':
                     'transparent';
     }
@@ -94,7 +94,7 @@ async function boot() {
                 document.getElementById("riskStripePlace").textContent = place;
                 document.getElementById("indicator").setAttribute("fill", getColor(score));
 
-                if(score > 30){
+                if(score >= 3.51){
                     document.getElementById("riskScale").setAttribute("src", 'img/highRisk.svg');
                     var riskLevel = document.getElementById("riskLevel");
                     document.getElementById("adviceSummary").textContent = "The COVID rate is higher and you are advised to stay at home as much as you can";
@@ -104,7 +104,7 @@ async function boot() {
                     riskLevel.textContent = "HIGH RISK";
                     riskLevel.style.color = '#ff0034';
                 }
-                else if(score > 1){
+                else if(score >= 0.71){
                     document.getElementById("riskScale").setAttribute("src", 'img/medRisk.svg');
                     var riskLevel = document.getElementById("riskLevel");
                     document.getElementById("adviceSummary").textContent = "The COVID rate is moderate and you are advised to stay alert, paying particular attention to maintaining social distancing";
@@ -127,7 +127,7 @@ async function boot() {
                 else{
                     document.getElementById("riskScale").setAttribute("src", '');
                 }
-                var cb = createColourBar(features[i].properties,1,30, 250, 250);
+                var cb = createColourBar(features[i].properties,0.71,3.51, 250, 250);
                 document.getElementById("colorBar").innerHTML="";
                 document.getElementById("colorBar").appendChild(cb);
                 $('#myChart').remove();
