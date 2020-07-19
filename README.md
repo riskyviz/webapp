@@ -1,4 +1,4 @@
-# riskCovid - team VISIGOTH
+# Covid-19 Visualising Risk - team VISIGOTH
 
 This repo explores a way to present information to the public on the risk of contracting cvoid-19 as part of the 
 4th NERC COVID-19 Digital Sprint Hackathon "Visualising risk"
@@ -9,26 +9,25 @@ https://digitalenvironment.org/home/covid-19-digital-sprint-hackathons/covid-19-
 
 ## Aims and Methodology
 
-We decided to provide a map based approach, deilvering localised risk information via a web application that is 
+We decided to adopt a map based approach, deilvering localised risk information via a prototype web application that is 
 designed to work well on a smartphone or a device with a larger screen. 
 
-[Click here for a summary of the app](COVIDRiskFinder.pdf)
+[Click here for a summary of the app with screenshots](https://riskyviz.github.io/webapp/COVIDRiskFinder.pdf)
 
-[Click here to launch the App](https://riskyviz.github.io/webapp/riskCOVID/)
+[Click here to launch the web app](https://riskyviz.github.io/webapp/riskCOVID/)
 
-We decided to define risk as simply the risk of an individual contracting the virus.  
+We decided to define the risk in question as the risk of an individual contracting the virus.  
 
 We did not consider the risks of severe illness or mortality which are known to vary by demographic factors 
-(for example age).  Although useful, this personalised definition of risk does not consider the 
+(for example age or ethnicity).  Although useful, this individualized definition of risk does not consider the 
 risk of spreading the virus through the community.
 
 The main design decisions for the user experience were:
 
-* Provide a simple explaination of risk in terms of low/medium/high and traffic light colours
-* Provide simple and clear advice dependent upon the estimated risk
-* Link to official information on COVID-19
-* Provide a way to drill down to information on the current trends in each local area
-* Cover England and Wales 
+* Provide an easy to understand explaination of risk 
+* Provide simple and clear advice depending upon the estimated risk
+* Link to official information and advice on COVID-19
+* Cover England and Wales (Scotland and Northern Ireland do not provide suitable data)
 * Provide risk estimates at as local a level as possible 
 
 The implementation requirements were:
@@ -36,15 +35,17 @@ The implementation requirements were:
 * Use a simple explainable method for calculating risk estimates
 * Use information that is currently available to the public through official and verifiable sources
 * Make the updating of risk information easy and practical to perform on a daily basis (within 10 minutes)
+* Allow information to be consumed on a mobile or desktop device
 
 ## Methodology
 
 We define risk of contracting covid as either HIGH, MEDIUM or LOW, according to an estmate of the current daily positive test rate per 100K poplation.
 
-According to [this article](https://www.americanprogress.org/issues/healthcare/news/2020/05/04/484373/evidence-based-thresholds-states-must-meet-control-coronavirus-spread-safely-reopen-economies/) the US Center for Disease Control (CDC) identifies:
+According to [this article](https://www.americanprogress.org/issues/healthcare/news/2020/05/04/484373/evidence-based-thresholds-states-must-meet-control-coronavirus-spread-safely-reopen-economies/) 
+the US Center for Disease Control (CDC) identifies evidence based thresholds for considering the severity of the Covid-19 outbreak:
 
-* low-medium threshold as 10 positive cases per 100K people per 14 days (0.71 daily positive rate)
-* medium-high threshold as 50 positive cases per 100K people per 14 days (3.51 daily positive rate)
+* low-medium threshold as 10 positive cases per 100K population per 14 days (0.71 daily positive case rate per 100K)
+* medium-high threshold as 50 positive cases per 100K population per 14 days (3.57 daily positive case rate per 100K)
 
 Our estimates of daily positive test rates are based on the data released daily by [the UK government](https://coronavirus.data.gov.uk/archive) and [the Welsh government](https://public.tableau.com/profile/public.health.wales.health.protection#!/vizhome/RapidCOVID-19virology-Public/Headlinesummary)
 This data provides the number of daily positive (lab confirmed) cases in each Lower Tier Local Authority (LTLA).   
@@ -66,30 +67,12 @@ Basing risk on the number of positive cases (lab confirmed tests) introduces an 
 
 The repo is divided into three sections
 
-data_ingest folder - see the [README](data_ingest/README.md) - combine data to be used by the web app (Python)
+data_ingest folder - see the [README](data_ingest/README.md) - prepare data to be used by the web app (Python)
 riskCOVID - see the [README](riskCOVID/README.md) - source code for the web app (HTML/JavaScript/CSS)
-population_density - see the [README](population_density/README.md) - exploring population density in the bedford area
+data_exploration - see the [README](data_exploration/README.md) - exploring population density in the bedford area
 
-## WebApp Visualisations
+## About the team
 
-We introduce a number of visualisations:
+Our family based team of three consists of a product manager, an electronic engineer and a data scientist.
 
-* Zoomable "slippy" map overlaying semi-transparent areas coloured by risk (green,amber,red) on openstreetmap
-* Traffic light graphic and icons for 
-* Risk stripes - borrowing heavily from [Climate/Warming Stripes](https://showyourstripes.info/).
-  These subdivide the traffic light colours into hues to show how the risk has altered over the previous 30 days.
-* Plot of estimated case rate over previous 30 days.
 
-## Acknowledgements
-
-Our prototype relies upon a number of open source libraries and open data services:
-
-[LeafetJS](https://leafletjs.com/)
-[Turfjs](https://turfjs.org/)
-[JQuery](https://jquery.com/)
-[Bootstrap](https://getbootstrap.com/)
-[Font-Awesome](https://github.com/FortAwesome/Font-Awesome)
-[Mapbox](https://www.mapbox.com/)
-[Popper](https://popper.js.org/)
-[OpenStreetMap](https://www.openstreetmap.org/)
-[ChartJS](https://www.chartjs.org/)
