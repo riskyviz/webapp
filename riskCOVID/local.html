@@ -205,7 +205,7 @@
     var Marker = L.marker([lat, lon], {icon: logoIcon}).addTo(mymap);
     var score = sessionStorage.getItem("score");
     document.getElementById("indicator").setAttribute("fill", getColor(score));
-    if(score >= 3.52){
+    if(score >= 3.57){
         document.getElementById("riskScale").setAttribute("src", 'img/highRisk.svg');
     }
     else if(score >= 0.71){
@@ -218,7 +218,7 @@
         document.getElementById("riskScale").setAttribute("src", '');
     }
     function getColor(d) {
-        return d >= 3.51 ? '#ff0034' :
+        return d >= 3.57 ? '#ff0034' :
             d >= 0.71  ? '#FFD300' :
                 d >= 0 ? '#80C904':
                     'transparent';

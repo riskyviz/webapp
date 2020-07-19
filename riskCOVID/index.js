@@ -15,7 +15,7 @@ async function boot() {
     if ("geolocation" in navigator) {
         var that =this;
 
-        this.watchID = navigator.geolocation.watchPosition(function(position) {
+        this.watchID = navigator.geolocation.getCurrentPosition(function(position) {
             var lon = position.coords.longitude;
             sessionStorage.setItem("longitude", lon);
             var lat = position.coords.latitude;
@@ -37,7 +37,7 @@ async function boot() {
                     window.location.assign("local.html");
                 }
             }
-        },function(err) { alert(err); });
+        },function(err) {});
     } else {
         // alert("no geolocation");
     }

@@ -5,7 +5,7 @@ async function boot() {
 
 
     function getColor(d) {
-        return d >= 3.51 ? '#ff0034' :
+        return d >= 3.57 ? '#ff0034' :
             d >= 0.71  ? '#FFD300' :
                 d >= 0 ? '#80C904':
                     'transparent';
@@ -94,7 +94,7 @@ async function boot() {
                 document.getElementById("riskStripePlace").textContent = place;
                 document.getElementById("indicator").setAttribute("fill", getColor(score));
 
-                if(score >= 3.51){
+                if(score >= 3.57){
                     document.getElementById("riskScale").setAttribute("src", 'img/highRisk.svg');
                     var riskLevel = document.getElementById("riskLevel");
                     document.getElementById("adviceSummary").textContent = "The COVID rate is higher and you are advised to stay at home as much as you can";

@@ -15,7 +15,7 @@ CASE_WINDOW_DAYS = 14
 # use thresholds defined by CDC
 # https://www.americanprogress.org/issues/healthcare/news/2020/05/04/484373/evidence-based-thresholds-states-must-meet-control-coronavirus-spread-safely-reopen-economies/
 LOW_THRESHOLD = 0.71
-HIGH_THRESHOLD = 3.51
+HIGH_THRESHOLD = 3.57
 
 print("Reading case data - England")
 
