@@ -67,9 +67,11 @@ Basing risk on the number of positive cases (lab confirmed tests) introduces an 
 
 The repo is divided into three sections:
 
-data_ingest folder - see the [README](data_ingest/) - prepare data to be used by the web app (Python)
-riskCOVID - see the [README](riskCOVID/) - source code for the web app (HTML/JavaScript/CSS)
-data_exploration - see the [README](data_exploration/) - exploring population density in the bedford area
+data_ingest folder - see the [README](data_ingest/README.md) - prepare data to be used by the web app (Python)
+
+riskCOVID - see the [README](riskCOVID/README.md) - source code for the web app (HTML/JavaScript/CSS)
+
+data_exploration - see the [README](data_exploration/README.md) - exploring population density in the bedford area
 
 ## About the team
 

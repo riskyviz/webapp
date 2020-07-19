@@ -15,7 +15,7 @@ cd webapp/riskCOVID
 python3 -m http.server
 ```
 
-Open the app in a we browser by navigating to localhost:8000
+Open the app in a web browser by navigating to `localhost:8000`
 
 ## Using the app
 
@@ -58,12 +58,12 @@ This app is a prototype and could be improved in many ways:
 
 Our prototype relies upon a number of open source libraries and open data services:
 
-[LeafetJS](https://leafletjs.com/)
-[Turfjs](https://turfjs.org/)
-[JQuery](https://jquery.com/)
-[Bootstrap](https://getbootstrap.com/)
-[Font-Awesome](https://github.com/FortAwesome/Font-Awesome)
-[Mapbox](https://www.mapbox.com/)
-[Popper](https://popper.js.org/)
-[OpenStreetMap](https://www.openstreetmap.org/)
-[ChartJS](https://www.chartjs.org/)
+* [LeafetJS](https://leafletjs.com/)
+* [Turfjs](https://turfjs.org/)
+* [JQuery](https://jquery.com/)
+* [Bootstrap](https://getbootstrap.com/)
+* [Font-Awesome](https://github.com/FortAwesome/Font-Awesome)
+* [Mapbox](https://www.mapbox.com/)
+* [Popper](https://popper.js.org/)
+* [OpenStreetMap](https://www.openstreetmap.org/)
+* [ChartJS](https://www.chartjs.org/)
