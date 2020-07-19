@@ -1,4 +1,4 @@
-# CovidRiskFinder - data exploration
+# CovidRiskFinder - Data Exploration
 
 As part of the project, the team explored a number of data sources before selecting the data used to caclulate the risk estimates.
 
@@ -8,7 +8,7 @@ Bedford is a small town with a population esimated at 106,940 in the 2011 census
 
 Bedford is surrounded by farmland and villages of varying sizes.
 
-## Population density
+## Population Density
 
 As part of the project we hoped to provide a "hyper local" assessment of risk based partly on population
 denisty estimates.  A suitable 1km resolution dataset was available from the NERC Centre for Ecology & Hydrology:

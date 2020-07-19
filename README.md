@@ -12,6 +12,9 @@ https://digitalenvironment.org/home/covid-19-digital-sprint-hackathons/covid-19-
 We decided to adopt a map based approach, deilvering localised risk information via a prototype web application that is 
 designed to work well on a smartphone or a device with a larger screen. 
 
+![Flyer page 1](https://riskyviz.github.io/webapp/flyer1.jpg)
+![Flyer page 2](https://riskyviz.github.io/webapp/flyer2.jpg)
+
 [Click here for a summary of the app with screenshots](https://riskyviz.github.io/webapp/COVIDRiskFinder.pdf)
 
 [Click here to launch the web app](https://riskyviz.github.io/webapp/riskCOVID/)
@@ -69,7 +72,7 @@ The repo is divided into three sections:
 
 data_ingest folder - see the [README](data_ingest/README.md) - prepare data to be used by the web app (Python)
 
-riskCOVID - see the [README](riskCOVID/README.md) - source code for the web app (HTML/JavaScript/CSS)
+riskCOVID - see the [README](README_APP.md) - covering the web app (HTML/JavaScript/CSS)
 
 data_exploration - see the [README](data_exploration/README.md) - exploring population density in the bedford area
 

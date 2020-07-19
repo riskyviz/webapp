@@ -43,7 +43,7 @@ We introduce a number of visualisations:
 
 ## Limitations and future work
 
-As discussed in [the main README](../README.md) the estimates could be improved by having 
+As discussed in [the main README](README.md) the estimates could be improved by having 
 more detailed data made available, in particular:
 
 * daily test statistics at the MSOA level
