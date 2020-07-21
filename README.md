@@ -70,14 +70,18 @@ Basing risk on the number of positive cases (lab confirmed tests) introduces an 
 
 The repo is divided into three sections:
 
+data_exploration - see the [README](data_exploration/README.md) - exploring various data in the bedford area and nationally
+
 data_ingest folder - see the [README](data_ingest/README.md) - prepare data to be used by the web app (Python)
 
 riskCOVID - see the [README](README_APP.md) - covering the web app (HTML/JavaScript/CSS)
 
-data_exploration - see the [README](data_exploration/README.md) - exploring population density in the bedford area
-
 ## About the team
 
 Our family-based team of three consists of a product manager, an electronic engineer and a data scientist.
+
+## Acknowledgements - Data and Copyright
+
+This work depended upon a number of datasets obtained from the UK Office for National Statistics, data.gov.uk, the UK parliament, the Welsh government, the NERC Centre for Ecology & Hydrology and https://github.com/martinjc/UK-GeoJSON 
 
 
