@@ -23,7 +23,7 @@ vs = Sequence(orientation="vertical")   # position to the right
 m = Map(zoom_to=4,width=768,projection=Projections.EPSG_4326,boundaries=((bedford_lon-box/2,bedford_lat-box/2),(bedford_lon+box/2,bedford_lat+box/2)),font_height=18)
 
 wms = WMS(type="osm")
-m.addLayer(wms)
+m.add(wms)
 
 palette=DiscretePalette()
 palette.setDefaultColour("grey")
@@ -45,7 +45,7 @@ def scoreThreshold(score):
 risk = Chloropleth("../riskCOVID/new.geojson",valueNameOrFn=lambda p:scoreThreshold(p["score"]),labelNameOrFn=lambda x:"Riskk Score",palette=palette, stroke_width=0)
 risk.setOpacity(0.5)
 risk.setInfo("estimate of covid risk","","Contains data supplied by UK office of national statistics, the UK government, and the Welsh government")
-m.addLayer(risk)
+m.add(risk)
 
 vs.add(Text("Bedford Area Covid Risk Estimates - Sample 18th July 2020"))
 hs.add(m)

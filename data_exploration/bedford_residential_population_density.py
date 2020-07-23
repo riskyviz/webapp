@@ -24,14 +24,14 @@ m = Map(zoom_to=4,width=768,projection=Projections.EPSG_4326,boundaries=((bedfor
 hs.add(m)
 
 wms = WMS(type="osm")
-m.addLayer(wms)
+m.add(wms)
 
 palette=ContinuousPalette(colourMap=["white","red"],min_val=0)
 palette.setDefaultColour("red")
 residential = Chloropleth("pd_residential_bedford.geojson",valueNameOrFn=lambda p:p["DN"],labelNameOrFn=lambda x:"DN",palette=palette, stroke_width=0)
 residential.setOpacity(0.75)
 residential.setInfo("population density per sq km","","Contains data supplied by Natural Environment Research Council. ©NERC (Centre for Ecology & Hydrology). Contains National Statistics data © Crown copyright and database right 2011.","https://catalogue.ceh.ac.uk/documents/0995e94d-6d42-40c1-8ed4-5090d82471e1")
-m.addLayer(residential)
+m.add(residential)
 
 mlm = MapLayerManager([{"layer":wms,"label":"OpenStreetMap"},{"layer":residential,"label":"Residential Population Density"}],
                       title="Controls",height=150)

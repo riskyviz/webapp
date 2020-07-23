@@ -54,18 +54,18 @@ s = Sequence(orientation="horizontal")
 
 # KDE Plot first
 p1 = ContinuousPalette(colourMap=["#0000FF00","yellow","red"],withIntervals=False)
-k = KDE(dataset,bandwidth=10000,nr_samples_across=80,lon="lon",lat="lat",value="score",contour_bands=20,palette=p1)
+k = KDE(dataset,bandwidth=10000,nr_samples_across=80,lon="lon",lat="lat",colour="score",contour_bands=20,palette=p1)
 m1 = Map(width=1024, boundaries=((-6,50),(2,56)))
-m1.addLayer(gi)
-m1.addLayer(k)
+m1.add(gi)
+m1.add(k)
 s.add(Sequence().add(Text("Heat Map")).add(m1))
 
 # Hex bin
 p2 = ContinuousPalette(colourMap=["#0000FF00","yellow","red"],withIntervals=False)
-h = Hexbin(dataset,value="score",nr_bins_across=80,lon="lon",lat="lat",palette=p2,stroke_width=0.5)
+h = Hexbin(dataset,colour="score",nr_bins_across=80,lon="lon",lat="lat",palette=p2,stroke_width=0.5)
 m2 = Map(width=1024, boundaries=((-6,50),(2,56)))
-m2.addLayer(gi)
-m2.addLayer(h)
+m2.add(gi)
+m2.add(h)
 s.add(Sequence().add(Text("Binned Plot")).add(m2))
 
 # Cartogram
@@ -76,8 +76,8 @@ mm = MarkerManager()
 mm.setDefaultRadius(5)
 cg = Cartogram(dataset,marker_manager=mm,iterations=100,lon="lon",lat="lat",colour="risk_band",palette=p3,f2=1)
 m3 = Map(width=1024,boundaries=((-6,50),(2,56)))
-m3.addLayer(gi)
-m3.addLayer(cg)
+m3.add(gi)
+m3.add(cg)
 s.add(Sequence().add(Text("Cartogram")).add(m3))
 
 d.add(Text("Covid-19 Estimated Rate - 18th July - National Maps"))

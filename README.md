@@ -60,6 +60,9 @@ We perform the following post processing steps on the data:
 It is unlikely that the virus spreads evenly through each MSOA within an LTLA.  The algorithm for distributing test cases considers the distribution of deaths recorded by the ONS in each MSOA from COVID-19 in the 3 month period (March 2020 to May 2020)
 as being a useful model for how recent cases will be distributed across an LTLA.  This approach has obvious weaknesses due to the fact that the mortality rate is known to vary widely within local areas, and of course, the way in which the virus spreads will change over time.  It would have been ideal to have available information on COVID-19 infections at the MSOA level, but the UK and Welsh governments do not yet release this data.
 
+After looking at the distribution of deaths in the ONS statistics, we use a laplace correction when computing the weighting
+to try to smooth out the effect of random noise on the MSOA weightings. 
+
 (2) Compute a linear weighted average of the estimated daily positive count for each MSOA over the previous 14 days
 
 Whilst providing higher weights to recent case statistics (for example if a spike is developing quickly), this approach smooths out fluctuations due to weekend reporting.

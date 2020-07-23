@@ -88,6 +88,9 @@ for line in reader:
         # district_code = line[mapping_columns["LAD17CD"]]
         district_name = line[mapping_columns["LAName"]]
         district_code = line[mapping_columns["LACode"]]
+        year = line[mapping_columns["YEAR"]]
+        if year != "2018":
+            continue
         # only construct a mapping for districts for which we have covid case stats
         mapping_district_name_to_code[district_name] = district_code
         mapping_msoa_to_district[msoa_code] = district_code
@@ -194,10 +197,11 @@ for msoa_code in deaths_by_msoa:
     msoa_deaths = deaths_by_msoa[msoa_code]
     if district:
         district_deaths = deaths_by_district[district]
-        # laplace correction - add an extra death in each MSOA
-        # to avoid an MSOA given zero weighting
+        # laplace correction - add 4 extra deaths in each MSOA
+        # to avoid an MSOA given zero weighting and smooth some of the effects
+        # due to random noise
         msoas_in_district = len(mapping_district_to_msoas[district])
-        weighting = (1+msoa_deaths) / (msoas_in_district+district_deaths)
+        weighting = (4+msoa_deaths) / (4*msoas_in_district+district_deaths)
         msoa_weighting[msoa_code] = weighting
 
 print("creating intermediate output geojson")

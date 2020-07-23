@@ -18,7 +18,7 @@ vs = Sequence(orientation="vertical")   # position to the right
 m = Map(zoom_to=8,width=1024,font_height=18)
 
 wms = WMS(type="osm")
-m.addLayer(wms)
+m.add(wms)
 
 palette=DiscretePalette()
 palette.setDefaultColour("grey")
@@ -40,7 +40,7 @@ def scoreThreshold(score):
 risk = Chloropleth("../riskCOVID/new.geojson",valueNameOrFn=lambda p:scoreThreshold(p["score"]),labelNameOrFn=lambda x:"Risk Score",palette=palette, stroke_width=0)
 risk.setOpacity(0.5)
 risk.setInfo("estimate of covid risk","","Contains data supplied by UK office of national statistics, the UK government, and the Welsh government")
-m.addLayer(risk)
+m.add(risk)
 
 vs.add(Text("England & Wales Covid Risk Estimates - Sample 18th July 2020"))
 hs.add(m)

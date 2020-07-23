@@ -29,6 +29,23 @@ After some consideration we decided not to incorporate this data into the estima
 the statistical population density does not reflect the actual population density as experienced by people - or to put it 
 another way - people tend to concentrate in small areas.
 
+## Covid Deaths - Distribution By MSOA
+
+For each Local Authority area, we plotted the distribution of population and Covid-19 deaths over the MSOAs, using data 
+provided by the ONS.
+
+From these plots we can see that deaths are not distributed in line with population.  However, we note that the numbers 
+of deaths in many areas are low, and some of the variation can be explained by chance.  In the available time it was not 
+possible to better model these effects but we decided to use a laplace correction (basically, add 4 deaths to each MSOA) 
+when deciding how to distribute the risk of contracting Covid-19 in each area based on these statistics.
+
+![Variation of population and COVID-19 deaths in Bedfordshire](https://riskyviz.github.io/webapp/data_exploration/covid_deaths.png)
+
+[source code](https://github.com/riskyviz/webapp/blob/master/data_exploration/covid_deaths.py)
+
+[Open plots for all areas in new tab](https://riskyviz.github.io/webapp/data_exploration/covid_deaths.html)
+
+
 ## Plotting risk on a national map for England and Wales
 
 To debug our methods, it was helpful to regularly plot the `new.geojson` file output from our [data ingest process](../data_ingest/README.md)
