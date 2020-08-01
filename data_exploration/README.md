@@ -23,7 +23,7 @@ The data was then converted from raster to .geojson files (polygonized) using qg
 
 [source code](https://github.com/riskyviz/webapp/blob/master/data_exploration/bedford_residential_population_density.py)
 
-[Open interactive version in new tab](https://github.com/riskyviz/webapp/raw/master/data_exploration/bedford_residential_population_density.html)
+[Right click to download interactive HTML](https://github.com/riskyviz/webapp/raw/master/data_exploration/bedford_residential_population_density.html)
 
 After some consideration we decided not to incorporate this data into the estimates of covid risk.  Our reasoning was that 
 the statistical population density does not reflect the actual population density as experienced by people - or to put it 
@@ -43,7 +43,7 @@ when deciding how to distribute the risk of contracting Covid-19 in each area ba
 
 [source code](https://github.com/riskyviz/webapp/blob/master/data_exploration/covid_deaths.py)
 
-[Open plots for all areas in new tab](https://github.com/riskyviz/webapp/raw/master/data_exploration/covid_deaths.html)
+[Right click to download interactive HTML](https://github.com/riskyviz/webapp/raw/master/data_exploration/covid_deaths.html)
 
 
 ## Plotting risk on a national map for England and Wales
@@ -55,7 +55,7 @@ onto a zoomable chloropleth map covering England and Wales.
 
 [source code](https://github.com/riskyviz/webapp/blob/master/data_exploration/england_wales_risk.py)
 
-[Open interactive version in new tab (Caution, 45Mb HTML file)](https://github.com/riskyviz/webapp/raw/master/data_exploration/england_wales_risk.html)
+[Right click to download interactive HTML (Caution, 45Mb HTML file)](https://github.com/riskyviz/webapp/raw/master/data_exploration/england_wales_risk.html)
 
 At a national or regional level, chloropleth maps are not a good representation as small areas are almost invisible and large areas dominate.
 
@@ -70,7 +70,7 @@ We generated plots of the risk scores using alternative methods to uncover the n
 
 [source code](https://github.com/riskyviz/webapp/blob/master/data_exploration/england_wales_risk_plots.py)
 
-[Open large version in new tab](https://github.com/riskyviz/webapp/raw/master/data_exploration/england_wales_risk_plots.html)
+[Right click to download interactive HTML](https://github.com/riskyviz/webapp/raw/master/data_exploration/england_wales_risk_plots.html)
 
 For the above plot you will need to collect a geoJSON file with the England and Wales outline from:
 
@@ -89,5 +89,5 @@ We plotted the estimate of covid risk produced by our method for Bedford and the
 
 [source code](https://github.com/riskyviz/webapp/blob/master/data_exploration/bedford_risk.py)
 
-[Interactive version](https://github.com/riskyviz/webapp/raw/master/data_exploration/bedford_risk.html)
+[Right click to download interactive HTML](https://github.com/riskyviz/webapp/raw/master/data_exploration/bedford_risk.html)
 
