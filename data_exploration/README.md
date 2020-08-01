@@ -19,11 +19,11 @@ The data was downloaded from https://catalogue.ceh.ac.uk/documents/0995e94d-6d42
 
 The data was then converted from raster to .geojson files (polygonized) using qgis and displayed on interactive maps for the Bedford area using [visigoth](https://visigoth.org)
 
-![Plot of Population Density in the Bedford area](https://riskyviz.github.io/webapp/data_exploration/bedford_residential_population_density.png)
+![Plot of Population Density in the Bedford area](https://github.com/riskyviz/webapp/raw/master//data_exploration/bedford_residential_population_density.png)
 
 [source code](https://github.com/riskyviz/webapp/blob/master/data_exploration/bedford_residential_population_density.py)
 
-[Open interactive version in new tab](https://riskyviz.github.io/webapp/data_exploration/bedford_residential_population_density.html)
+[Open interactive version in new tab](https://github.com/riskyviz/webapp/raw/master/data_exploration/bedford_residential_population_density.html)
 
 After some consideration we decided not to incorporate this data into the estimates of covid risk.  Our reasoning was that 
 the statistical population density does not reflect the actual population density as experienced by people - or to put it 
@@ -39,11 +39,11 @@ of deaths in many areas are low, and some of the variation can be explained by c
 possible to better model these effects but we decided to use a laplace correction (basically, add 4 deaths to each MSOA) 
 when deciding how to distribute the risk of contracting Covid-19 in each area based on these statistics.
 
-![Variation of population and COVID-19 deaths in Bedfordshire](https://riskyviz.github.io/webapp/data_exploration/covid_deaths.png)
+![Variation of population and COVID-19 deaths in Bedfordshire](https://github.com/riskyviz/webapp/raw/master/data_exploration/covid_deaths.png)
 
 [source code](https://github.com/riskyviz/webapp/blob/master/data_exploration/covid_deaths.py)
 
-[Open plots for all areas in new tab](https://riskyviz.github.io/webapp/data_exploration/covid_deaths.html)
+[Open plots for all areas in new tab](https://github.com/riskyviz/webapp/raw/master/data_exploration/covid_deaths.html)
 
 
 ## Plotting risk on a national map for England and Wales
@@ -51,11 +51,11 @@ when deciding how to distribute the risk of contracting Covid-19 in each area ba
 To debug our methods, it was helpful to regularly plot the `new.geojson` file output from our [data ingest process](../data_ingest/README.md)
 onto a zoomable chloropleth map covering England and Wales.
 
-![Plot of Covid Risk in England and Wales](https://riskyviz.github.io/webapp/data_exploration/england_wales_risk.png)
+![Plot of Covid Risk in England and Wales](https://github.com/riskyviz/webapp/raw/master/data_exploration/england_wales_risk.png)
 
 [source code](https://github.com/riskyviz/webapp/blob/master/data_exploration/england_wales_risk.py)
 
-[Open interactive version in new tab (Caution, 45Mb HTML file)](https://riskyviz.github.io/webapp/data_exploration/england_wales_risk.html)
+[Open interactive version in new tab (Caution, 45Mb HTML file)](https://github.com/riskyviz/webapp/raw/master/data_exploration/england_wales_risk.html)
 
 At a national or regional level, chloropleth maps are not a good representation as small areas are almost invisible and large areas dominate.
 
@@ -66,11 +66,11 @@ wget https://opendata.arcgis.com/datasets/b0a6d8a3dc5d4718b3fd62c548d60f81_0.geo
 ```
 We generated plots of the risk scores using alternative methods to uncover the national distribution of Covid-19 risk:
 
-![More Plots of Covid Risk in England and Wales](https://riskyviz.github.io/webapp/data_exploration/england_wales_risk_plots.png)
+![More Plots of Covid Risk in England and Wales](https://github.com/riskyviz/webapp/raw/master/data_exploration/england_wales_risk_plots.png)
 
 [source code](https://github.com/riskyviz/webapp/blob/master/data_exploration/england_wales_risk_plots.py)
 
-[Open large version in new tab](https://riskyviz.github.io/webapp/data_exploration/england_wales_risk_plots.html)
+[Open large version in new tab](https://github.com/riskyviz/webapp/raw/master/data_exploration/england_wales_risk_plots.html)
 
 For the above plot you will need to collect a geoJSON file with the England and Wales outline from:
 
@@ -85,9 +85,9 @@ a choloropleth map probably makes more sense at the local level, because it is e
 
 We plotted the estimate of covid risk produced by our method for Bedford and the surrounding area
 
-![Plot of Covid Risk in the Bedford Area](https://riskyviz.github.io/webapp/data_exploration/bedford_risk.png)
+![Plot of Covid Risk in the Bedford Area](https://github.com/riskyviz/webapp/raw/master/data_exploration/bedford_risk.png)
 
 [source code](https://github.com/riskyviz/webapp/blob/master/data_exploration/bedford_risk.py)
 
-[Interactive version](https://riskyviz.github.io/webapp/data_exploration/bedford_risk.html)
+[Interactive version](https://github.com/riskyviz/webapp/raw/master/data_exploration/bedford_risk.html)
 

@@ -2,11 +2,11 @@
 
 This prototype web app presents estimates of local risk of contracting Covid-19.
 
-## Open hosted version
-
-The web app is hosted by github [click here to open](https://riskyviz.github.io/webapp/riskCOVID/)
-
 ## Running Locally
+
+**Note** - the data checked into the github repo covers the period up to July 29th 2020
+
+See [the data ingest README](data_ingest/README.md) for instructions on refreshing the data.
 
 To serve the app locally, clone this repo and then:
 

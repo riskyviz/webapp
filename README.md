@@ -1,3 +1,5 @@
+![Winner](https://github.com/riskyviz/webapp/raw/master/covid-19_H4_Winner_FirstPlace.png)
+
 # Covid-19 Visualising Risk - team VISIGOTH
 
 This repo explores a way to present information to the public on the risk of contracting cvoid-19 as part of the 
@@ -12,12 +14,10 @@ https://digitalenvironment.org/home/covid-19-digital-sprint-hackathons/covid-19-
 We decided to adopt a map based approach, deilvering localised risk information via a prototype web application that is 
 designed to work well on a smartphone or a device with a larger screen. 
 
-![Flyer page 1](https://riskyviz.github.io/webapp/flyer1.jpg)
-![Flyer page 2](https://riskyviz.github.io/webapp/flyer2.jpg)
+![Flyer page 1](https://github.com/riskyviz/webapp/raw/master/flyer1.jpg)
+![Flyer page 2](https://github.com/riskyviz/webapp/raw/master/flyer1.jpg)
 
-[Click here for a summary of the app with screenshots](https://riskyviz.github.io/webapp/COVIDRiskFinder.pdf)
-
-[Click here to launch the web app](https://riskyviz.github.io/webapp/riskCOVID/)
+[Click here for a summary of the app with screenshots](https://github.com/riskyviz/webapp/raw/master/COVIDRiskFinder.pdf)
 
 We decided to define the risk in question as the risk of an individual contracting the virus.  
 
@@ -87,4 +87,16 @@ Our family-based team of three consists of a product manager, an electronic engi
 
 This work depended upon a number of datasets obtained from the UK Office for National Statistics, data.gov.uk, the UK parliament, the Welsh government, the NERC Centre for Ecology & Hydrology and https://github.com/martinjc/UK-GeoJSON 
 
+Our prototype webapp relies upon a number of open source libraries and open data services:
 
+* [LeafetJS](https://leafletjs.com/)
+* [Turfjs](https://turfjs.org/)
+* [JQuery](https://jquery.com/)
+* [Bootstrap](https://getbootstrap.com/)
+* [Font-Awesome](https://github.com/FortAwesome/Font-Awesome)
+* [Mapbox](https://www.mapbox.com/)
+* [Popper](https://popper.js.org/)
+* [OpenStreetMap](https://www.openstreetmap.org/)
+* [ChartJS](https://www.chartjs.org/)
+
+Data exploration and data ingest uses the [visigoth library](https://visigoth.org)
