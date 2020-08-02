@@ -9,6 +9,10 @@ https://digitalenvironment.org/home/covid-19-digital-sprint-hackathons/
 
 https://digitalenvironment.org/home/covid-19-digital-sprint-hackathons/covid-19-hackathon-4-visualising-risk/
 
+See also [this follow on github project](https://github.com/riskyviz/viewer) which aims to provide reusable code
+for presenting general risk and environmental geospatial data using some of the code and designs developed in this 
+hackathon.
+
 ## Aims and Methodology
 
 We decided to adopt a map based approach, deilvering localised risk information via a prototype web application that is 
