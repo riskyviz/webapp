@@ -1,5 +1,3 @@
-![Winner](https://github.com/riskyviz/webapp/raw/master/covid-19_H4_Winner_FirstPlace.png)
-
 # Covid-19 Visualising Risk - team VISIGOTH
 
 This repo explores a way to present information to the public on the risk of contracting cvoid-19 as part of the 
