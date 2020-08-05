@@ -1,5 +1,7 @@
 # Covid-19 Visualising Risk - team VISIGOTH
 
+![Winner](https://github.com/riskyviz/webapp/raw/master/covid-19_H4_Winner_FirstPlace.png)
+
 This repo explores a way to present information to the public on the risk of contracting cvoid-19 as part of the 
 4th NERC COVID-19 Digital Sprint Hackathon "Visualising risk"
 
@@ -15,6 +17,26 @@ hackathon.
 
 We decided to adopt a map based approach, deilvering localised risk information via a prototype web application that is 
 designed to work well on a smartphone or a device with a larger screen. 
+
+### Screenshots (Mobile)
+
+<table>
+  <tr>
+    <td><img src="https://github.com/riskyviz/webapp/raw/master/screenshots/screen1.png" width="416"></td>
+    <td><img src="https://github.com/riskyviz/webapp/raw/master/screenshots/screen2.png" width="416"></td>
+    <td><img src="https://github.com/riskyviz/webapp/raw/master/screenshots/screen3.png" width="416"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td><img src="https://github.com/riskyviz/webapp/raw/master/screenshots/screen4.png" width="416"></td>
+    <td><img src="https://github.com/riskyviz/webapp/raw/master/screenshots/screen5.png" width="416"></td>
+    <td><img src="" width="416"></td>
+  </tr>
+ </table>
+
+### Summary
 
 ![Flyer page 1](https://github.com/riskyviz/webapp/raw/master/flyer1.jpg)
 ![Flyer page 2](https://github.com/riskyviz/webapp/raw/master/flyer1.jpg)
