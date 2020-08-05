@@ -32,7 +32,7 @@ designed to work well on a smartphone or a device with a larger screen.
   <tr>
     <td><img src="https://github.com/riskyviz/webapp/raw/master/screenshots/screen4.png" width="416"></td>
     <td><img src="https://github.com/riskyviz/webapp/raw/master/screenshots/screen5.png" width="416"></td>
-    <td><img src="" width="416"></td>
+    <td><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="416"></td>
   </tr>
  </table>
 
