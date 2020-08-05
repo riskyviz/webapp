@@ -359,7 +359,8 @@ async function boot() {
         var endDate = parseDate(data["LatestDate"]);
         // and the start date in the history
         var startDate = new Date();
-        startDate.setDate(endDate.getDate()-(scores.length-1));
+        var dateOffsetMS = (24*60*60*1000) * (scores.length-1);
+        startDate.setTime(endDate.getTime()-dateOffsetMS);
         var dateArray = []
         dateArray = getDates(startDate,endDate);
 
