@@ -204,11 +204,10 @@ async function boot() {
 
         // work out the end date (with the latest score) ...
         var endDate = parseDate(score_obj["LatestDate"]);
-
-        // and the start date in the history
         var startDate = new Date();
+        var dateOffsetMS = (24*60*60*1000) * (scores.length-1);
+        startDate.setTime(endDate.getTime()-dateOffsetMS);
 
-        startDate.setDate(endDate.getDate()-(scores.length-1));
         document.getElementById("endDate").textContent = formatDate(endDate);
         document.getElementById("startDate").textContent = formatDate(startDate);
         document.getElementById("date").textContent = formatDate(endDate);
